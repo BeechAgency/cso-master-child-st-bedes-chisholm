@@ -50,23 +50,16 @@ add_filter('tiny_mce_before_init', 'csomaster_mce4_options');
 
 
 require get_stylesheet_directory() . '/inc/child-settings.php';
-require get_stylesheet_directory() . '/inc/child-updater.php';
+require get_stylesheet_directory() . '/inc/updater.php';
 
-
-$update_key = get_option('update_key', 'csomasterchild_updates_key');
-
-$updater = new CatholicSchoolsMN_Theme_Updater( __FILE__ );
-$updater->set_logging(false);
+$update_key = get_option('csomaster_updates_key', null );
+$updater = new CatholicSchoolsMN_Child_Theme_Updater( __FILE__ );
+$updater->set_username( 'BeechAgency' );
+$updater->set_repository( $GLOBALS['THEME_NAME'] );
+$updater->set_theme($GLOBALS['THEME_NAME']); 
 
 if( $update_key ) {
     $updater->authorize($update_key);    
 }
 
-$updater->set_username( 'BeechAgency' );
-$updater->set_repository( $GLOBALS['THEME_NAME'] );
-$updater->set_theme( $GLOBALS['THEME_NAME'] ); 
-
-/**
- * Call the updater and initialize it.
- */
 $updater->initialize();
